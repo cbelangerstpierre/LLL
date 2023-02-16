@@ -69,4 +69,4 @@ def LLL(vectors, delta):
 # Test the LLL function with two sets of vectors
 # print(LLL([[201, 37], [1648, 297]], 0.75))
 # print(LLL([[15, 23, 11], [46, 15, 3], [32, 1, 1]], 0.75))
-print(LLL([[2, 3], [3,2]], 0.75))
+# print(LLL([[2, 3], [3,2]], 0.75))

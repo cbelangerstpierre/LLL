@@ -1,4 +1,6 @@
+import math
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def lattice_plot(Q: int, V: list, show_plot=False) -> dict:
@@ -17,34 +19,49 @@ def lattice_plot(Q: int, V: list, show_plot=False) -> dict:
         for i in range(len(pos)):
             # The position in each dimension is updated by adding the velocity in that dimension and taking the modulus
             new_pos = pos[i] + V[i]
-            if new_pos >= q_range:
+            # print(new_pos)
+            if new_pos > q_range:
                 new_pos -= Q
+            # print(new_pos)
+            # print("--------------")
             pos[i] = new_pos
 
     # Function to calculate the lattice points
     def calculate_lattice():
         num_points = 0
+        points_sorted = []
         while pos != starting_point or num_points == 0:
             # Append the current position to the list of points in each dimension
+            # print(pos)
             for i in range(len(points)):
                 points[i].append(pos[i])
+            # print(pos)
+                    # pos_to_add = [abs(x) for x in pos]
+                    # if pos_to_add not in points_sorted:
+            points_sorted.append(tuple(pos))
+            # print(points_sorted)
             num_points += 1
             # Update the position in each dimension
             update_pos()
-        return num_points
+        
+        def length(e):
+            return np.linalg.norm(np.array(e))
+        points_sorted = sorted(points_sorted[1:], key=length)
+        return num_points, points_sorted
 
     # Function to create a 2D plot of the lattice points
     def create_2D_plot(num_points):
         # Set the title of the plot to indicate the velocity vector and the modulus value
         plt.title("Lattice of " + str(V) + " with mod " + str(Q))
         # Add text to the plot indicating the number of points in the lattice
-        plt.text(-q_range / 2, -q_range * 1.2, "Number of points=" + str(num_points), horizontalalignment='center')
+        plt.text(-q_range / 2, -q_range * 1.4, "Number of points=" + str(num_points), horizontalalignment='center')
         # Set the x and y limits of the plot
         plt.xlim(-q_range, q_range)
         plt.ylim(-q_range, q_range)
         # Plot the lattice points as dots on the plot
         plt.plot(points[0], points[1], 'o')
         # Display the plot
+        plt.axis('square')
         plt.show()
 
     # Function to create a 3D plot of the lattice points
@@ -55,27 +72,17 @@ def lattice_plot(Q: int, V: list, show_plot=False) -> dict:
         ax = fig.add_subplot(projection='3d')
 
         # Set the x, y, and z limits of the 3D plot
-        ax.set_xlim3d(0, Q)
-        ax.set_ylim3d(0, Q)
-        ax.set_zlim3d(0, Q)
+        ax.set_xlim3d(-q_range, q_range)
+        ax.set_ylim3d(-q_range, q_range)
+        ax.set_zlim3d(-q_range, q_range)
 
         # Plot the lattice points as a scatter plot
         ax.scatter(points[0], points[1], points[2])
         # Display the plot
         plt.show()
 
-    # def show_results():
-    #     # Print the value of Q (modulus value)
-    #     print("mod Q =", Q)
-    #
-    #     # Print the values of the vector V
-    #     print("Vector =", V)
-    #
-    #     # Print the total number of points generated in the lattice
-    #     print("Number of points =", num_points)
-
     # Calculate the lattice based on the values of Q and V
-    num_points = calculate_lattice()
+    num_points, points_sorted = calculate_lattice()
 
     if show_plot:
         # If the length of V is 2, create a 2D plot
@@ -86,8 +93,8 @@ def lattice_plot(Q: int, V: list, show_plot=False) -> dict:
         elif len(V) == 3:
             create_3D_plot()
 
-    return {"Q": Q, "V": V, "num_points": num_points, "points": points}
+    return {"Q": Q, "V": V, "num_points": num_points, "points": points, "sorted": points_sorted}
 
 
 if __name__ == '__main__':
-    print(lattice_plot(23, [2, 3], True))
+    print(lattice_plot(23, [2, 3], True)["sorted"])
