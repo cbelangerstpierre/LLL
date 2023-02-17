@@ -50,15 +50,15 @@ def test_function(function):
     start = timeit.default_timer()
     
     # Loop through the list of prime numbers up to a certain number
-    for q in list(map(int, primesfrom2to(20000))):
+    for q in list(map(int, primesfrom2to(200))):
         # Call the function argument and pass the prime number as an argument
         result = function(q)
-        # print(q, "->", result) # Code to add to see the results
+        print(q, "->", result) # Code to add to see the results
     
     # Print the time it took to run the function on all prime numbers
     print("Time :", timeit.default_timer() - start)
 
 # Call the test_function with onlyTest as the argument
-test_function(onlyTest)
+# test_function(onlyTest)
 # Call the test_function with testAndMGenerate as the argument
 test_function(testAndMGenerate)
