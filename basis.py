@@ -15,7 +15,7 @@ def get_basis(points_sorted: list, length: int) -> list:
                 basis.append(point)
                 if len(basis) == length:
                     break
-    print("Time:", timeit.default_timer() - start)
+    print("Time to calculate the basis is :", timeit.default_timer() - start)
     return basis
 
 

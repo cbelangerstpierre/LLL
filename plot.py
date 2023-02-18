@@ -17,10 +17,12 @@ def get_plot(Q, V, points, num_points, basis, reduced_basis=None):
         # Plot the lattice points as dots on the plot
         plt.plot(points[0], points[1], 'o')
         plt.arrow(0, 0, basis[0][0], basis[0][1], color="r", label="basis")
-        plt.arrow(0, 0, basis[1][0], basis[1][1], color="r")
+        if len(basis) > 1:
+            plt.arrow(0, 0, basis[1][0], basis[1][1], color="r")
         if reduced_basis:
             plt.arrow(0, 0, reduced_basis[0][0], reduced_basis[0][1], color="b", label="LLL")
-            plt.arrow(0, 0, reduced_basis[1][0], reduced_basis[1][1], color="b")
+            if len(reduced_basis) > 1:
+                plt.arrow(0, 0, reduced_basis[1][0], reduced_basis[1][1], color="b")
 
         ax = plt.subplot(111)
         # Shrink current axis by 20%

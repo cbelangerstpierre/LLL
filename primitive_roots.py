@@ -12,17 +12,25 @@ def onlyTest(mod):
     # Return a list of all numbers `a` between 1 and `mod - 1` inclusive, where `a` is not a perfect square and does not equal `1` when raised to the power of each test in `tests` modulo `mod`.
     return [a for a in range(1, mod) if math.isqrt(a) ** 2 != a and all(pow(a, test, mod) != 1 for test in tests)]
 
+
+def get_first_primitive(mod):
+    # print(mod)
+    mod_minus1 = mod - 1
+    tests = list(map(lambda x: mod_minus1 // x, sympy.primefactors(mod_minus1)))
+    for a in range(1, mod):
+        if math.isqrt(a) ** 2 != a and all(pow(a, test, mod) != 1 for test in tests):
+            # print(a)
+            return a
+        
+        
 # This function performs the same tests as `onlyTest` in order to find the first primitive root and generates a list of `m` values for each other primitive roots.
 def testAndMGenerate(mod):
+    if mod == 2:
+        return None
     # Calculate `mod - 1` and store the result in `mod_minus1` to not repeatedly make the operation
     mod_minus1 = mod - 1
-    # Use `sympy.primefactors` to get the prime factors of `mod_minus1`, then map the function `mod_minus1 // x` (Integer division) over the list of prime factors to get our tests.
-    tests = list(map(lambda x: mod_minus1 // x, sympy.primefactors(mod_minus1)))
-    # Loop over all numbers `a` between 1 and `mod - 1` inclusive.
-    for a in range(1, mod):
-        # If `a` is not a perfect square and does not equal `1` when raised to the power of each test in `tests` modulo `mod`, return a sorted list of `m` values, where each `m` is calculated as `pow(a, m, mod)`, with `m` ranging from 1 to `mod - 1` inclusive and `math.gcd(m, mod_minus1) == 1` to get every primitive roots.
-        if math.isqrt(a) ** 2 != a and all(pow(a, test, mod) != 1 for test in tests):
-            return sorted([pow(a, m, mod) for m in range(1, mod) if math.gcd(m, mod_minus1) == 1])
+    a = get_first_primitive(mod)
+    return sorted([pow(a, m, mod) for m in range(1, mod) if math.gcd(m, mod_minus1) == 1])
 
 
 def primesfrom2to(n):
@@ -50,7 +58,7 @@ def test_function(function):
     start = timeit.default_timer()
     
     # Loop through the list of prime numbers up to a certain number
-    for q in list(map(int, primesfrom2to(200))):
+    for q in list(map(int, primesfrom2to(20000))):
         # Call the function argument and pass the prime number as an argument
         result = function(q)
         print(q, "->", result) # Code to add to see the results
@@ -58,7 +66,8 @@ def test_function(function):
     # Print the time it took to run the function on all prime numbers
     print("Time :", timeit.default_timer() - start)
 
-# Call the test_function with onlyTest as the argument
-# test_function(onlyTest)
-# Call the test_function with testAndMGenerate as the argument
-test_function(testAndMGenerate)
+if __name__ == "__main__":
+    # Call the test_function with onlyTest as the argument
+    # test_function(onlyTest)
+    # Call the test_function with testAndMGenerate as the argument
+    test_function(testAndMGenerate)

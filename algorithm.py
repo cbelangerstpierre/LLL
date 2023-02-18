@@ -1,20 +1,30 @@
 from basis import get_basis
 from lattice import get_lattice
+from utils import get_longest_length, get_pairs_count
 from plot import get_plot
 from lll import LLL
+from primitive_roots import get_first_primitive
+from vector_generator import get_vector_generator
 
-Q = 11
-V = [2, 4, 7]
 
+# Q = 101
+# V = get_vector_generator(Q, get_first_primitive(Q))
+Q = 17
+V = [5, 3]
 delta = 0.75
-# print(len(set(V)))
+print("Q =", Q)
+print("V =", V)
+print("Len of V =", len(set(V)))
 
 num_points, points, points_sorted = get_lattice(Q, V)
-basis = get_basis(points_sorted, len(set(V)))
-# print(len(basis))
-# print(points_sorted)
-# print("_____________________")
+print("Points sum =", [sum(point) for point in points])
+print("Assumed len basis =", len(V) - get_pairs_count(V, Q))
+basis = get_basis(points_sorted, len(V) - get_pairs_count(V, Q))
+print("Len of B =", len(basis))
+print("Points =", points_sorted)
 print("Basis =\n" + "\n".join(list(map(str, basis))))
+longest_vector, longest_vector_length = get_longest_length(basis)
+print("Longest basis vector =", str(longest_vector) + "\nWith a length of", longest_vector_length)
 reduced_basis = LLL(basis.copy(), delta)
 if list(map(tuple, reduced_basis)) != basis:
     print("\nReduced Basis =\n" + "\n".join(list(map(str, reduced_basis))))
@@ -36,7 +46,7 @@ else:
    Example 2 : The vector [1, 5, 3, 1, 4] will give the basis : [[1, 5, 3, 1, 4], [13, 8, -18, 13, -5], [19, -19, 0, 19, 19], [10, -7, 30, 10, -17]]
    This is the case even after the LLL reduction, which makes sense because it reduces a vector by the other vectors,
    which are also repeating their components at the same place.
-
+30,5s
 3. Q = 125, V = [4, 23]
    Basis = [(-10, 5), (7, 9)]
    abs(floor(125 / 23)) = 5
