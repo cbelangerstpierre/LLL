@@ -1,5 +1,13 @@
 import numpy as np
+from sympy import Matrix
 
+
+def is_combination(M: Matrix) -> bool:
+    return False if any(all(num == 0 for num in row[:-1]) and row[-1] != 0 for i in range(M.rows) if (row := M.row(i))) else True
+
+def is_basis(M: Matrix) -> bool:
+    # print(M.cols)
+    return len(M.T.rref()[1]) == M.cols
 
 def get_pairs_count(arr, n):
     unordered_map = {}

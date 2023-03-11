@@ -50,6 +50,11 @@ def get_plot(Q, V, points, num_points, basis, reduced_basis=None):
 
         # Plot the lattice points as a scatter plot
         ax.scatter(points[0], points[1], points[2])
+        ax.plot([0, 0], [0, 0])
+        # ax.plot([0, basis[0][0]], [0, basis[0][1]], zs=[0, basis[0][2]])
+        # ax.plot([0, basis[1][0]], [0, basis[1][1]], zs=[0, basis[1][2]])
+        # if len(basis) > 2:
+        #     ax.plot([0, basis[2][0]], [0, basis[2][1]], zs=[0, basis[2][2]])
         # Display the plot
         plt.show()
 

@@ -1,30 +1,44 @@
+import timeit
+from sympy import Matrix
 from basis import get_basis
 from lattice import get_lattice
-from utils import get_longest_length, get_pairs_count
+from utils import get_longest_length, get_pairs_count, is_basis
 from plot import get_plot
 from lll import LLL
 from primitive_roots import get_first_primitive
 from vector_generator import get_vector_generator
 
 
-# Q = 101
+# Q = 163
 # V = get_vector_generator(Q, get_first_primitive(Q))
-Q = 17
-V = [5, 3]
+Q = 127
+V = [23, 27, 67]
 delta = 0.75
 print("Q =", Q)
 print("V =", V)
 print("Len of V =", len(set(V)))
 
 num_points, points, points_sorted = get_lattice(Q, V)
+points_sorted_new = points_sorted.copy()
+for point in reversed(points_sorted):
+    if tuple(map(lambda x: -x, point)) in points_sorted_new:
+        points_sorted_new.remove(point)
+print("len points =", len(points_sorted_new))
+# print("len points =", len(points_sorted))
+print("Points =", points_sorted_new)
+# print("Points =", points_sorted)
 print("Points sum =", [sum(point) for point in points])
 print("Assumed len basis =", len(V) - get_pairs_count(V, Q))
-basis = get_basis(points_sorted, len(V) - get_pairs_count(V, Q))
+basis = points_sorted_new[:len(V) - get_pairs_count(V, Q)]
+start = timeit.default_timer()
+if not is_basis(Matrix([[basis[b][a] for b in range(len(basis))] for a in range(len(basis[0]))])):
+    basis = get_basis(points_sorted_new, len(V) - get_pairs_count(V, Q))
+print("Time taken =", timeit.default_timer() - start)
 print("Len of B =", len(basis))
-print("Points =", points_sorted)
 print("Basis =\n" + "\n".join(list(map(str, basis))))
 longest_vector, longest_vector_length = get_longest_length(basis)
 print("Longest basis vector =", str(longest_vector) + "\nWith a length of", longest_vector_length)
+print("Is really a basis =", is_basis(Matrix([[basis[b][a] for b in range(len(basis))] for a in range(len(basis[0]))])))
 reduced_basis = LLL(basis.copy(), delta)
 if list(map(tuple, reduced_basis)) != basis:
     print("\nReduced Basis =\n" + "\n".join(list(map(str, reduced_basis))))
@@ -52,4 +66,9 @@ else:
    abs(floor(125 / 23)) = 5
    125 % 23 = 10
    ?????
+
+
+
+   WOAHHH
+   si une composante plus une autre = une autre composante, alors dans la base aussi
 """
