@@ -2,7 +2,7 @@ import numpy as np
 
 
 def get_lattice(Q: int, V: list) -> tuple:
-    q_range = (Q - 1) / 2
+    q_range = Q / 2
     # List of starting points, initialized to 0, with length equal to the length of V
     starting_point = [0 for _ in range(len(V))]
 

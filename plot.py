@@ -3,7 +3,7 @@ import numpy as np
 
 def get_plot(Q, V, points, num_points, basis, reduced_basis=None):
 
-    q_range = (Q - 1) / 2
+    q_range = Q / 2
 
     # Function to create a 2D plot of the lattice points
     def create_2D_plot(num_points):
@@ -32,6 +32,7 @@ def get_plot(Q, V, points, num_points, basis, reduced_basis=None):
 
         # Display the plot
         plt.axis('square')
+        ax.axis("square")
 
 
         plt.show()
