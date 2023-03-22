@@ -7,6 +7,7 @@ def get_plot(Q, V, points, num_points, basis, reduced_basis=None):
 
     # Function to create a 2D plot of the lattice points
     def create_2D_plot(num_points):
+        print(points)
         # Set the title of the plot to indicate the velocity vector and the modulus value
         plt.title("Lattice of " + str(V) + " with mod " + str(Q))
         # Add text to the plot indicating the number of points in the lattice
@@ -15,8 +16,12 @@ def get_plot(Q, V, points, num_points, basis, reduced_basis=None):
         plt.xlim(-q_range, q_range)
         plt.ylim(-q_range, q_range)
         # Plot the lattice points as dots on the plot
-        plt.plot(points[0], points[1], 'o')
-        plt.arrow(0, 0, basis[0][0], basis[0][1], color="r", label="basis")
+        # evens = points[::2]
+        #  = points[1::2]
+        green = plt.scatter(points[0][::2], points[1][::2], color="g")
+        blue = plt.scatter(points[0][1::2], points[1][1::2], color="b")
+        # plt.legend((blue, red), ("Pair", "Impair"), loc="center")
+        red = plt.arrow(0, 0, basis[0][0], basis[0][1], color="r", label="basis")
         if len(basis) > 1:
             plt.arrow(0, 0, basis[1][0], basis[1][1], color="r")
         if reduced_basis:
@@ -28,7 +33,7 @@ def get_plot(Q, V, points, num_points, basis, reduced_basis=None):
         # Shrink current axis by 20%
         box = ax.get_position()
         ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-        ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+        ax.legend((green, blue, red), ("Pair", "Impair", "Basis"), loc='center left', bbox_to_anchor=(1, 0.5))
 
         # Display the plot
         plt.axis('square')
@@ -50,7 +55,8 @@ def get_plot(Q, V, points, num_points, basis, reduced_basis=None):
         ax.set_zlim3d(-q_range, q_range)
 
         # Plot the lattice points as a scatter plot
-        ax.scatter(points[0], points[1], points[2])
+        ax.scatter(points[0][::2], points[1][::2], points[2][::2], color="g")
+        ax.scatter(points[0][1::2], points[1][1::2], points[2][1::2], color="b")
         ax.plot([0, 0], [0, 0])
         # ax.plot([0, basis[0][0]], [0, basis[0][1]], zs=[0, basis[0][2]])
         # ax.plot([0, basis[1][0]], [0, basis[1][1]], zs=[0, basis[1][2]])
