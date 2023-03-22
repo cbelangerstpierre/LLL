@@ -2,6 +2,7 @@ import math
 import timeit
 import numpy
 import sympy
+from primitive_roots import primesfrom2to
 
 
 def get_vector_generator(q, gen):
@@ -47,6 +48,27 @@ def get_vector_generator2(q, gen):
             vector_generator.append(counter)
     return vector_generator
     # print("Time:", timeit.default_timer() - start)
+    
+    
+    
+
+def get_vector_generator3(q, gen):
+    list_of_primes = []
+    
+    
+    for f in range (2,q-1):
+        if sympy.isprime(f):
+            list_of_primes.append(f)
+        if len(list_of_primes) == math.floor(math.log(q)):
+            break
+    list_of_primes2 = list_of_primes.copy()
+    
+    for exp in range(1, q):
+        a = pow(gen, exp, q)
+        if a in list_of_primes:
+            index_exp = list_of_primes.index(a)
+            list_of_primes2[index_exp] = exp
+    return list_of_primes2
 
 
 
