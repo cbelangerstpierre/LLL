@@ -6,13 +6,13 @@ from utils import get_longest_length, get_pairs_count, is_basis
 from plot import get_plot
 from lll import LLL
 from primitive_roots import get_first_primitive
-from vector_generator import get_vector_generator
+from vector_generator import get_vector_generator3
 
 
-Q = 103
-V = get_vector_generator(Q, get_first_primitive(Q))
-# Q = 9
-# V = [2, 4]
+# Q = 11
+# V = get_vector_generator3(Q, get_first_primitive(Q))
+Q = 101
+V = [31, 87]
 delta = 0.75
 print("Q =", Q)
 print("V =", V)
@@ -43,6 +43,6 @@ print("Biggest composant of biggest basis vector =", str(max(longest_vector)))
 reduced_basis = LLL(basis.copy(), delta)
 if list(map(tuple, reduced_basis)) != basis:
     print("\nReduced Basis =\n" + "\n".join(list(map(str, reduced_basis))))
-    get_plot(Q - 1, V, points, num_points, basis, reduced_basis)
+    get_plot(Q - 1, V, points, num_points, basis, reduced_basis, show_even=True)
 else:
-    get_plot(Q - 1, V, points, num_points, basis)
+    get_plot(Q - 1, V, points, num_points, basis, show_even=False)

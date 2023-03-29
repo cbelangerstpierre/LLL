@@ -23,17 +23,21 @@ def get_lattice2(Q: int, V: list) -> tuple:
 
     def dedede():
         i = 0
+        box_size = Q / math.log(math.log(Q))
+        # print("Box Size :", box_size)
         while pos != starting_point or i == 0:
             if i != 0 and i % 2 == 1:
                 abs_point = list(map(abs, pos.copy()))
-                if (max(abs_point)) <= (Q / math.log(math.log(Q))):
-                    return (i, pos)
+                # print(max(abs_point))
+                if (max(abs_point)) <= box_size:
+                    return i, pos
             i += 1
             update_pos()
+        return None, None
 
     # Calculate the lattice based on the values of Q and V
     index, point = dedede()
-    return (index, point)
+    return index, point
 
 if __name__ == '__main__':
     print(get_lattice2(23, [2, 3]))
