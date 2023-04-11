@@ -55,7 +55,6 @@ def get_vector_generator2(q, gen):
 def get_vector_generator3(q, gen):
     list_of_primes = []
     
-    
     for f in range (2,q-1):
         if sympy.isprime(f):
             list_of_primes.append(f)

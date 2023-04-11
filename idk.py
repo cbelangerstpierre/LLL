@@ -55,6 +55,13 @@ from decimal import Decimal, getcontext
 #     if index != 1:
 #         print(Q, "=>", index)
 
+Q = 470206921
+V = get_vector_generator3(Q, get_first_primitive(Q))
+# print("Time : " + str(timeit.default_timer() - start))
+# start = timeit.default_timer()
+index, point = get_lattice2(Q - 1, V)
+# print("Time : " + str(timeit.default_timer() - start))
+print(Q, "=>", index)
 
 # for Q in range(1000, 10000, 10):
 #     box_size = Q / math.log(math.log(Q))
@@ -67,19 +74,19 @@ from decimal import Decimal, getcontext
 
 
 
-for Q in map(int, primesfrom2to(10000)):
-    if Q < 2000:
-        continue
-    box_size = Q / math.log(math.log(Q))
-    chance_outside_box = 1 - (box_size / ((Q - 1) / 2)) ** math.floor(math.log(Q))
-    V = get_vector_generator3(Q, get_first_primitive(Q))
-    num_points, points, points_sorted = get_lattice(Q - 1, V)
-    total = 0
-    for point in points_sorted:
-        abs_point = list(map(abs, point))
-        if (max(abs_point)) <= box_size:
-            total += 1
-    print(Q, "=>", str(round(100 - total / num_points * 100, 5)) + "%")
-    # chance_every_point_outside_box = Decimal(chance_outside_box) ** Q
-    print(Q, "=>", str(round(chance_outside_box * 100, 5)) + "%")
-    # # print(Q, "=>", float(chance_every_point_outside_box * 100))
+# for Q in map(int, primesfrom2to(10000)):
+#     if Q < 2000:
+#         continue
+#     box_size = Q / math.log(math.log(Q))
+#     chance_outside_box = 1 - (box_size / ((Q - 1) / 2)) ** math.floor(math.log(Q))
+#     V = get_vector_generator3(Q, get_first_primitive(Q))
+#     num_points, points, points_sorted = get_lattice(Q - 1, V)
+#     total = 0
+#     for point in points_sorted:
+#         abs_point = list(map(abs, point))
+#         if (max(abs_point)) <= box_size:
+#             total += 1
+#     print(Q, "=>", str(round(100 - total / num_points * 100, 5)) + "%")
+#     # chance_every_point_outside_box = Decimal(chance_outside_box) ** Q
+#     print(Q, "=>", str(round(chance_outside_box * 100, 5)) + "%")
+#     # # print(Q, "=>", float(chance_every_point_outside_box * 100))

@@ -14,12 +14,10 @@ def onlyTest(mod):
 
 
 def get_first_primitive(mod):
-    # print(mod)
     mod_minus1 = mod - 1
     tests = list(map(lambda x: mod_minus1 // x, sympy.primefactors(mod_minus1)))
     for a in range(1, mod):
         if math.isqrt(a) ** 2 != a and all(pow(a, test, mod) != 1 for test in tests):
-            # print(a)
             return a
         
         
@@ -70,4 +68,5 @@ if __name__ == "__main__":
     # Call the test_function with onlyTest as the argument
     # test_function(onlyTest)
     # Call the test_function with testAndMGenerate as the argument
-    test_function(testAndMGenerate)
+    # test_function(testAndMGenerate)
+    print(testAndMGenerate(101))

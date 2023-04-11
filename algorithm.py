@@ -9,10 +9,10 @@ from primitive_roots import get_first_primitive
 from vector_generator import get_vector_generator3
 
 
-# Q = 11
-# V = get_vector_generator3(Q, get_first_primitive(Q))
-Q = 101
-V = [31, 87]
+Q = 37
+V = get_vector_generator3(Q, get_first_primitive(Q))
+# Q = 101
+# V = [31, 87]
 delta = 0.75
 print("Q =", Q)
 print("V =", V)
@@ -45,4 +45,4 @@ if list(map(tuple, reduced_basis)) != basis:
     print("\nReduced Basis =\n" + "\n".join(list(map(str, reduced_basis))))
     get_plot(Q - 1, V, points, num_points, basis, reduced_basis, show_even=True)
 else:
-    get_plot(Q - 1, V, points, num_points, basis, show_even=False)
+    get_plot(Q - 1, V, points, num_points, basis, show_even=True)

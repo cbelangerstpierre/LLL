@@ -16,8 +16,6 @@ def get_plot(Q, V, points, num_points, basis, reduced_basis=None, show_even=True
         plt.xlim(-q_range, q_range)
         plt.ylim(-q_range, q_range)
         # Plot the lattice points as dots on the plot
-        # evens = points[::2]
-        #  = points[1::2]
         if show_even:
             green = plt.scatter(points[0][::2], points[1][::2], color="g")
         blue = plt.scatter(points[0][1::2], points[1][1::2], color="b")

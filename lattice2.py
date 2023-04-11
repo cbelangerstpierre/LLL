@@ -14,21 +14,18 @@ def get_lattice2(Q: int, V: list) -> tuple:
     def update_pos():
         for i in range(len(pos)):
             # The position in each dimension is updated by adding the velocity in that dimension and taking the modulus
-            # Remove the * 2 to get every integers, put it to only have odds
             new_pos = pos[i] + V[i]
             if new_pos > q_range:
                 new_pos -= Q
             pos[i] = new_pos
 
 
-    def dedede():
+    def find_point():
         i = 0
         box_size = Q / math.log(math.log(Q))
-        # print("Box Size :", box_size)
         while pos != starting_point or i == 0:
             if i != 0 and i % 2 == 1:
                 abs_point = list(map(abs, pos.copy()))
-                # print(max(abs_point))
                 if (max(abs_point)) <= box_size:
                     return i, pos
             i += 1
@@ -36,7 +33,7 @@ def get_lattice2(Q: int, V: list) -> tuple:
         return None, None
 
     # Calculate the lattice based on the values of Q and V
-    index, point = dedede()
+    index, point = find_point()
     return index, point
 
 if __name__ == '__main__':
